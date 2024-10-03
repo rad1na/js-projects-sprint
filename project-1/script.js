@@ -26,7 +26,7 @@ function generateNewRow(rowData) {
 // function that fetches the data and fills the table
 async function fetchAndFillData(url) {
     try {
-        const factsData = await fetchFactsData(url || "https://catfact.ninja/factsss?page=1");
+        const factsData = await fetchFactsData(url || "https://catfact.ninja/facts?page=1");
         if (factsData && factsData.data.length) {
             // generate table rows
             const tableRows = factsData.data.map((fact, index) => generateNewRow({ ...fact, index: factsData.from + index}))
