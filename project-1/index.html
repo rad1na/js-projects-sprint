@@ -1,37 +1,59 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="./styles.css">
-</head>
-<body>
-    <div class="table-wrapper">
+    <link rel="stylesheet" href="./styles.css" />
+    <!-- Import Poppins Font, Reference: https://fonts.google.com/selection?query=poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="random-fact-wrapper">
+        <div class="loading hidden" id="random-fact-loader"></div>
+        <div id="random-fact"><q>Click to generate random fact</q></div>
+        <button id="generate-random-fact-button" class="main-button green">Generate</button>
+      </div>
+    <div class="table-wrapper hidden">
+      <div class="table-inner-wrapper">
         <table id="main-table">
-            <thead>
-                <tr>
-                    <th>No#</th>
-                    <th>Fact</th>
-                    <th>Length</th>
-                </tr>
-            </thead>
-            <tbody>
-            </tbody>
+          <thead>
+            <tr>
+              <th class="fixed-width-40">No#</th>
+              <th class="fixed-width-40">Length</th>
+              <th>Fact</th>
+            </tr>
+          </thead>
+          <tbody></tbody>
         </table>
-        <div class="table-pagination-buttons">
-            <a id="first" class="pagination-button"><<</a>
-            <a id="prev" class="pagination-button"><</a>
-            <span id="current" class="pagination-button"></span>
-            <a id="next" class="pagination-button">></a>
-            <a id="last" class="pagination-button">>></a>
+        <div class="loading-overlay hidden">
+          <div class="loading"></div>
         </div>
-        <div class="random-fact-wrapper">
-            <button id="generate-random-fact-button">Generate</button>
-            <p id="random-fact">Click to generate random fact</p>
-        </div>
+      </div>
+      <div class="table-pagination-buttons">
+        <a id="first" class="pagination-button disabled"><<</a>
+        <a id="prev" class="pagination-button"><</a>
+        <span id="current" class="pagination-button"></span>
+        <a id="next" class="pagination-button">></a>
+        <a id="last" class="pagination-button">>></a>
+      </div>
+      <div class="simulation-buttons">
+        <button id="simulate-error-fetch" class="main-button red">Simulate Errors</button>
+      </div>
     </div>
-    
+    <div class="error-message-wrapper hidden bordered-red">
+        <h2>Error fetching table data</h2>
+        <div class="loading hidden" id="table-retry-loader"></div>
+        <button id="retry-button" class="main-button green">Retry</button>
+    </div>
+    <div class="loading-overlay" id="main-loader">
+      <div class="loading"></div>
+    </div>
     <script src="./script.js"></script>
-</body>
+  </body>
 </html>
