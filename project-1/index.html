@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./styles.css">
+</head>
+<body>
+    <div class="table-wrapper">
+        <table id="main-table">
+            <thead>
+                <tr>
+                    <th>No#</th>
+                    <th>Fact</th>
+                    <th>Length</th>
+                </tr>
+            </thead>
+            <tbody>
+            </tbody>
+        </table>
+        <div class="table-pagination-buttons">
+            <a id="first" class="pagination-button"><<</a>
+            <a id="prev" class="pagination-button"><</a>
+            <span id="current" class="pagination-button"></span>
+            <a id="next" class="pagination-button">></a>
+            <a id="last" class="pagination-button">>></a>
+        </div>
+        <div class="random-fact-wrapper">
+            <button id="generate-random-fact-button">Generate</button>
+            <p id="random-fact">Click to generate random fact</p>
+        </div>
+    </div>
+    
+    <script src="./script.js"></script>
+</body>
+</html>
