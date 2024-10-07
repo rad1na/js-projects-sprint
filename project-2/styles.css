@@ -1,0 +1,82 @@
+/* Simple Spinner, Reference: -> https://codepen.io/mandelid/pen/kNBYLJ */
+.loading {
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(255,255,255,.3);
+    border-radius: 50%;
+    border-top-color: #747474;
+    animation: spin 1s ease-in-out infinite;
+    -webkit-animation: spin 1s ease-in-out infinite;
+  }
+  
+  @keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+  @-webkit-keyframes spin {
+    to { -webkit-transform: rotate(360deg); }
+  }
+/* End spinner css */
+
+#main-image-container {
+    display: flex;
+    gap: 20px;
+    flex-direction: column;
+    min-height: 100vh;
+    flex-wrap: wrap;
+}
+
+.flex-row {
+    display: flex;
+    gap: 0 20px;
+}
+
+.flex-row-col {
+    background: #c3c3c3;
+    height: 300px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-row-col.loading .loading{
+    display: block;
+}
+
+.flex-grow-1 {
+    flex-grow: 1;
+}
+
+.flex-grow-2 {
+    flex-grow: 2;
+}
+
+.flex-grow-3 {
+    flex-grow: 3;
+}
+
+.flex-grow-4 {
+    flex-grow: 4;
+}
+
+@media (max-width: 768px){
+    .flex-grow-1, .flex-grow-2, .flex-grow-3, .flex-grow-3{
+        flex-grow: 1;
+    }
+}
+
+@media (max-width: 768px){
+    #main-image-container {
+        flex-direction: column;
+    }
+    .flex-row {
+        flex-direction: column;
+        gap: 20px;
+    }
+    .flex-row div {
+        width: 100%;
+    }
+}
+
+
+
