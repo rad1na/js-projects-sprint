@@ -2,7 +2,7 @@ const SCRIPTS = require('./scriptsArray.js')
 
 require('./scriptsArray.js')
 
-console.log("Chapter 5:\n\nLooping a triangle\n")
+console.log("Chapter 5:\n\n")
 
 console.log("Flattening\n")
 
@@ -93,3 +93,96 @@ const dominantWritingDirection = (str) => {
 }
 
 console.log(dominantWritingDirection(`英国的狗说"woof俄罗斯的狗说"тяв" فيهن انفسك`))
+
+
+
+console.log("Chapter 6:\n\n")
+
+console.log("\nVector Type\n");
+
+class Vec {
+    x;
+    y;
+    #length;
+    constructor(x,y){
+        this.x = x;
+        this.y = y;
+    }
+
+    plus(vec){
+        return new Vec(this.x + vec.x, this.y + vec.y)
+    }
+
+    minus(vec){
+        return new Vec(this.x - vec.x, this.y - vec.y)
+    }
+
+    get length(){
+        return [this.x, this.y];
+    }
+}
+
+const vec1 = new Vec(1,2);
+const vec2 = vec1.plus(new Vec(1,2));
+const vec3 = vec1.minus(new Vec(3,5));
+console.log(vec1, vec1.length, vec2.length, vec3.length)
+
+console.log("\nGroups\n");
+
+class Group{
+    #group;
+    constructor(){
+        this.#group = [];
+    }
+    add(item){
+        if(!this.#group.indexOf(item) >= 0) this.#group = [...this.#group, item]
+    }
+    delete(item){
+        this.#group = this.#group.filter(i => i !== item);
+    }
+    has(item){
+        return this.#group.indexOf(item) >= 0;
+    }
+    get group(){
+        return this.#group;
+    }
+    static from(iterableObject){
+        let newGroup = new this();
+        let iterator = iterableObject[Symbol.iterator];
+        if(iterator){
+            let values;
+            iterator = iterableObject[Symbol.iterator]();
+            do{
+                values = iterator.next();
+                if(values.value) newGroup.add(values.value)
+            }while(!values.done);
+        }
+        return newGroup;
+    }
+}
+
+class GroupIterator{
+    constructor(instance){
+        this.group = instance.group;
+    }
+    next(){
+        let done = this.group.length === 0;
+        let value = this.group.shift();
+        return {value, done}
+    }
+}
+
+let group1 = Group.from([1,2,3,4,5]);
+Group.prototype[Symbol.iterator] = function(){
+    return new GroupIterator(this);
+}
+Group.prototype.toString = function(){
+    return this.group.toString();
+}
+group1.delete(3);
+
+console.log("group has 1?",group1.has(1), group1.toString(), group1[Symbol.iterator]())
+
+for(let member of group1){
+    console.log(member, "for ... of")
+}
