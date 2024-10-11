@@ -4,7 +4,6 @@ const specificElementButton = document.getElementById("pip-specific-element");
 const overlay = document.getElementById("overlay");
 const dummyElementsWrapper = document.getElementById("dummy-elements-wrapper");
 const stopButton = document.getElementById("stop-button");
-let appendedElement;
 
 
 videoElemButton.addEventListener("click", () => {
@@ -16,7 +15,7 @@ specificElementButton.addEventListener("click", () => {
 })
 
 stopButton.addEventListener("click", () => {
-    stopCapture(appendedElement ? "element" : null);
+    stopCapture();
 })
 
 // Show button to stop streaming if we want to do it manually and hide other buttons
@@ -29,7 +28,14 @@ function showStopButton(show) {
 // Get the stream object after confirmation and append it to the video element
 async function triggerMediaCapturing() {
     try {
-        let captureStream = await navigator.mediaDevices.getDisplayMedia();
+        let captureStream = await navigator.mediaDevices.getDisplayMedia({
+            video: {
+              displaySurface: "window",
+            },
+            audio: false,
+            selfBrowserSurface: "exclude",
+            systemAudio: "exclude",
+          });
         if (captureStream) {
             videoElem.srcObject = captureStream;
         }
@@ -42,8 +48,8 @@ async function triggerMediaCapturing() {
 // Depending what button is clicked "element" or "video" detects what stream needs to be stopped
 // If Element, re-add element to dom and close the pip window
 // If Video Stream, get all tracks from video element, stop them and reset video src
-function stopCapture(type) {
-    if (type === 'element') {
+function stopCapture() {
+    if (!!window.documentPictureInPicture.window) {
         let replacementNode = document.querySelector("#replacement-node");
         replacementNode.insertAdjacentElement("afterend", appendedElement);
         replacementNode.remove()
@@ -104,7 +110,7 @@ async function loadPipWindow(element) {
         appendStylesheetsToWindow(pipWindow);
         appendedElement = element;
         pipWindow.addEventListener("pagehide", () => {
-            stopCapture("element");
+            stopCapture();
         });
     } catch (err) {
         console.log(err)
