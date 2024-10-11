@@ -92,7 +92,7 @@ function findRoute(graph, from, to) {
             }
         }
     }
-    
+
 }
 
 function goalOrientedRobot({ place, parcels }, route) {
@@ -149,17 +149,71 @@ runRobot(VillageState.random(), goalOrientedRobotAlternate);
 // console.log(first.place, first.parcels)
 // console.log(next.place, next.parcels)
 compareRobots();
-function compareRobots(){
+function compareRobots() {
     let robot1Turns = [];
     let robot2Turns = [];
     let robot3Turns = [];
-    for(let i = 1; i<=100; i++){
+    for (let i = 1; i <= 100; i++) {
         let randomVillageState = VillageState.random(5);
         robot1Turns.push(runRobot(randomVillageState, routeRobot, mailRoute))
         robot2Turns.push(runRobot(randomVillageState, goalOrientedRobot))
         robot3Turns.push(runRobot(randomVillageState, goalOrientedRobotAlternate))
     }
-    console.log(robot1Turns.reduce((p,c) => p += c, 0) / robot1Turns.length, " - Route Robot Average steps");
-    console.log(robot2Turns.reduce((p,c) => p += c, 0) / robot2Turns.length, " - Goal Oriented Robot Average steps");
-    console.log(robot3Turns.reduce((p,c) => p += c, 0) / robot3Turns.length, " - Goal Oriented Robot Alt Average steps");
+    console.log(robot1Turns.reduce((p, c) => p += c, 0) / robot1Turns.length, " - Route Robot Average steps");
+    console.log(robot2Turns.reduce((p, c) => p += c, 0) / robot2Turns.length, " - Goal Oriented Robot Average steps");
+    console.log(robot3Turns.reduce((p, c) => p += c, 0) / robot3Turns.length, " - Goal Oriented Robot Alt Average steps");
 }
+
+console.log("Chapter 8:\n\n")
+
+console.log("Retry\n")
+
+class MultiplicatorUnitFailure extends Error { }
+
+const primitiveMultiply = (x, y) => {
+    for (; ;) {
+        try {
+            const randomNumber = Math.ceil(Math.random() * 10);
+            if (randomNumber >= 8) {
+                return x * y;
+            } else throw new MultiplicatorUnitFailure("Error multiplying numbers");
+        } catch (error) {
+            if (error instanceof MultiplicatorUnitFailure) console.log(error.message);
+            else throw error;
+        }
+    }
+
+}
+
+const num = primitiveMultiply(5, 5);
+console.log(num);
+
+console.log("The Locked Box\n");
+
+const box = new class {
+    locked = true;
+    #content = [];
+    unlock() { this.locked = false; }
+    lock() { this.locked = true; }
+    get content() {
+        if (this.locked) throw new Error("Locked!");
+        return this.#content;
+    }
+};
+
+const withBoxUnlocked = (func) => {
+    let initiallyUnlocked = !box.locked;
+    try{
+        if(!initiallyUnlocked) box.unlock();
+        if(!func) throw new Error("You have to pass in a function!");
+        func();
+    }catch(error){
+        console.log(error.message);
+    }finally{
+        if(!initiallyUnlocked) box.lock();
+        console.log(box.locked)
+    }
+}
+
+withBoxUnlocked(() => {});
+

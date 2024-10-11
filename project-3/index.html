@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Project 3</title>
     <link rel="stylesheet" href="./styles.css" />
     <!-- Import Poppins Font, Reference: https://fonts.google.com/selection?query=poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -14,10 +14,32 @@
     />
   </head>
   <body>
-    <button id="pip-video-button">Stream Video</button>
-    <button id="pip-specific-element">Stream Element</button>
-    <video id="pip-video" autoplay width="600" height="300"></video>
-    <div id="main-container">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga iusto dolor eaque magni eos autem obcaecati sint repellat adipisci eligendi in id repellendus unde recusandae soluta totam quo, dignissimos molestiae.</div>
+    <div id="overlay"></div>
+    <div class="triggers-wrapper">
+      <span>TRIGGER MODES</span>
+      <div class="button-options">
+        <button id="pip-video-button" class="main-button red">Stream Video</button>
+        <button id="pip-specific-element" class="main-button green">Stream Element</button>
+        <button id="stop-button" class="main-button red" style="display: none">Stop Streaming</button>
+      </div>
+    </div>
+    <div id="dummy-elements-wrapper">
+      <p>
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga iusto dolor eaque magni eos autem obcaecati sint
+        repellat adipisci eligendi in id repellendus unde recusandae soluta totam quo, dignissimos molestiae.
+      </p>
+      <button class="main-button green">Dummy button</button>
+      <i>Some more elements</i>
+      <button class="main-button red">Dummy button 2</button>
+      <button class="main-button blue">Please move me</button>
+      <p style="background: #c3c3c3; font-size: 2rem">
+        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Fuga iusto dolor eaque magni eos autem obcaecati sint
+        repellat adipisci eligendi in id repellendus unde recusandae soluta totam quo, dignissimos molestiae.
+      </p>
+    </div>
+    <!-- Aspect ratio of 16/9 = 623/350 -->
+    <video id="pip-video" autoplay width="623" height="350"></video>
+    <div id="main-container"></div>
     <script src="./script.js"></script>
   </body>
 </html>
