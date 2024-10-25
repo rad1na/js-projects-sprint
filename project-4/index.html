@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Project 4</title>
+    <link rel="stylesheet" href="../project-3/styles.css" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div class="outer-wrapper">
+      <div class="robot-wrapper">
+        <audio id="audio-element" controls></audio>
+        <img src="./robot.gif" style="display: none" id="robot-gif" />
+        <img src="./robot-frame.jpeg" id="robot-frame" />
+        <!-- <canvas id="robot-canvas" height="300" width="300"></canvas> -->
+        <button class="main-button blue" id="fact-button" >Random Fact</button>
+        <div class="robot-baloon baloon" style="display: none;">
+            <p class="fact">Random Fact</p>
+            <div class="baloon-1 baloon"></div>
+            <div class="baloon-2 baloon"></div>
+            <div class="baloon-3 baloon"></div>
+            <div class="baloon-4 baloon"></div>
+        </div>
+      </div>
+    </div>
+    <script src="./script.js"></script>
+  </body>
+</html>
