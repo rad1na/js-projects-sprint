@@ -93,7 +93,7 @@ factButton.addEventListener("click", async (e) => {
         let { fact } = await fetchRandomFact();
         let { id, status, eta } = await createTextToVoice(fact);
         if (status === 'processing') {
-            factElement.innerHTML = `Preparing a fact for you, hold on... ETA: ${eta} seconds`;
+            factElement.innerHTML = `Preparing a fact for you, hold on... ETA: ${eta / 2} seconds`;
             factElement.parentElement.style.display = "block";
             factElement.parentElement.style.top = "-" + factElement.clientHeight + "px";
             e.target.disabled = "true";
@@ -101,7 +101,7 @@ factButton.addEventListener("click", async (e) => {
             setTimeout(async () => {
                 await fetchAudioURL(id)
                 factElement.innerHTML = fact;
-            }, 1000 * eta);
+            }, eta * 1000 / 2);
         }
     } catch (err) {
         console.log(err)
