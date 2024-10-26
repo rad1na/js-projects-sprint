@@ -2,6 +2,7 @@ let canvas = document.querySelector("#robot-canvas");
 let robotGIF = document.querySelector("#robot-gif");
 let robotFrame = document.querySelector("#robot-frame");
 let factButton = document.querySelector("#fact-button");
+let repeatButton = document.querySelector("#repeat-button");
 let audioElement = document.querySelector("#audio-element");
 let factElement = document.querySelector(".fact");
 
@@ -19,27 +20,23 @@ async function fetchRandomFact() {
     }
 }
 
-async function fetchTextToVoice(text) {
-    const data = new FormData();
-    data.append('src', text);
-    data.append('hl', 'en-us');
-    data.append('r', '0');
-    data.append('c', 'mp3');
-    data.append('f', '8khz_8bit_mono');
+async function createTextToVoice(text) {
     const options = {
         method: 'POST',
         headers: {
             'x-rapidapi-key': '79ce217751msh381c0850f0fd946p109c8ejsn51a636ac2a6d',
-            'x-rapidapi-host': 'voicerss-text-to-speech.p.rapidapi.com'
+            'x-rapidapi-host': 'large-text-to-speech.p.rapidapi.com',
+            'Content-Type': 'application/json'
         },
-        body: data
+        body: JSON.stringify({
+            text
+        })
     };
     try {
-        const res = await fetch("https://voicerss-text-to-speech.p.rapidapi.com/", options);
+        const res = await fetch("https://large-text-to-speech.p.rapidapi.com/tts", options);
         if (res.ok) {
-            let blob = await res.blob();
-            const url = URL.createObjectURL(blob);
-            audioElement.src = url;
+            let resJson = await res.json();
+            return resJson;
         } else {
             throw new Error(`(${res.status}) - ${res.statusText} - ${res.type}`);
         }
@@ -48,17 +45,65 @@ async function fetchTextToVoice(text) {
     }
 }
 
+async function fetchAudioURL(id) {
+    const options = {
+        method: 'GET',
+        headers: {
+            'x-rapidapi-key': '79ce217751msh381c0850f0fd946p109c8ejsn51a636ac2a6d',
+            'x-rapidapi-host': 'large-text-to-speech.p.rapidapi.com',
+        }
+    };
+    try {
+        const res = await fetch(`https://large-text-to-speech.p.rapidapi.com/tts?id=${id}`, options);
+        if (res.ok) {
+            let { status, url } = await res.json();
+            if (status === 'success')
+                audioElement.src = url;
+                audioElement.play();
+                repeatButton.style.display = "block";
+        } else {
+            throw new Error(`(${res.status}) - ${res.statusText} - ${res.type}`);
+        }
+    } catch (err) {
+        throw new Error(err);
+    }
+}
+
+audioElement.addEventListener("play", () => {
+    robotGIF.style.display = "block";
+    robotFrame.style.display = "none";
+})
+
+audioElement.addEventListener("ended", () => {
+    robotGIF.style.display = "none";
+    robotFrame.style.display = "block";
+    repeatButton.removeAttribute("disabled");
+    factButton.removeAttribute("disabled");
+})
+
+repeatButton.addEventListener("click", ()=> {
+    audioElement.play();
+    repeatButton.disabled = "true";
+    factButton.disabled = "true";
+});
+
 factButton.addEventListener("click", async (e) => {
     e.preventDefault();
-    try{
-        let {fact} = await fetchRandomFact();
-        let voice = await fetchTextToVoice(fact);
-        factElement.innerHTML = fact;
-        factElement.parentElement.style.display = "block";
-        factElement.parentElement.style.top = "-" + factElement.clientHeight + "px";
-        robotGIF.style.display = "block";
-        robotFrame.style.display = "none";
-    }catch(err){
+    try {
+        let { fact } = await fetchRandomFact();
+        let { id, status, eta } = await createTextToVoice(fact);
+        if (status === 'processing') {
+            factElement.innerHTML = `Preparing a fact for you, hold on... ETA: ${eta} seconds`;
+            factElement.parentElement.style.display = "block";
+            factElement.parentElement.style.top = "-" + factElement.clientHeight + "px";
+            e.target.disabled = "true";
+            repeatButton.disabled = "true";
+            setTimeout(async () => {
+                await fetchAudioURL(id)
+                factElement.innerHTML = fact;
+            }, 1000 * eta);
+        }
+    } catch (err) {
         console.log(err)
     }
 })

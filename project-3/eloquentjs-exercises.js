@@ -1,3 +1,4 @@
+import roadsGraph from "./roads.js";
 console.log("Chapter 7:\n\n")
 
 console.log("Robot Project\n")
@@ -20,20 +21,7 @@ const mailRoute = [
 
 ];
 // destinations we can reach from a given place
-const roadGraph = roads.reduce((graph, road) => {
-    let [from, to] = road.split("-");
-    if (from in graph) {
-        graph[from].push(to);
-    } else {
-        graph[from] = [to]
-    }
-    if (to in graph) {
-        graph[to].push(from);
-    } else {
-        graph[to] = [from]
-    }
-    return graph;
-}, {})
+const roadGraph = roadsGraph;
 
 class VillageState {
     constructor(place, parcels) {
@@ -217,3 +205,27 @@ const withBoxUnlocked = (func) => {
 
 withBoxUnlocked(() => {});
 
+console.log("Chapter 9:\n\n")
+
+console.log("RegExp Golf\n");
+
+
+const reg1 = /ca(r|t)/;
+console.log(reg1.test("car"), reg1.test("cat"))
+const reg2 = /pr?op/;
+console.log(reg2.test("prop"), reg2.test("pop"))
+const reg3 = /ferr\w+/;
+console.log(reg3.test("ferret"), reg3.test("ferry"), reg3.test("ferrari"));
+const reg4 = /\w*(ious)$/
+console.log(reg4.test("Furious"), reg4.test("Furiou"), reg4.test("ious"), reg4.test("Ravagious"));
+const reg5 = / [.,:;]/;
+console.log(reg5.test(" ;"),reg5.test(" "),reg5.test(" ."),reg5.test(" ,"),reg5.test(" :"))
+const reg6 = /\w{6,}/;
+console.log(reg6.test("five"),reg6.test("letters asd"))
+const reg7 = /\b[a-df-zA-DF-Z]+\b/i;
+console.log(reg7.test("five"),reg7.test("asd"))
+
+
+console.log("Chapter 11:\n\n")
+
+console.log("RegExp Golf\n");

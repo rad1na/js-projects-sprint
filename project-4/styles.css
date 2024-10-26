@@ -59,3 +59,8 @@
     text-align: center;
     font-size: 14px;
 }
+
+.main-button:disabled{
+    opacity: 0.5;
+    cursor: not-allowed;
+}
